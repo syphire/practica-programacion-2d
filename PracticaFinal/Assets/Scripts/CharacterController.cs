@@ -5,11 +5,16 @@ public class CharacterController : MonoBehaviour
 {
     private float speed = 4f;
     public Transform Character;
+
+    public Animator MoveCharacter;
+
+    Vector2 desplazamiento;
+
     /*public Transform FeetLeft;
     public Transform FeetRight;
     public LayerMask GroundLayer;
 
-    public Animator MoveCharacter;
+    
     public Animator JumpCharacter;
 
     public Action OnKilled;
@@ -30,67 +35,42 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        //MoveCharacter.GetComponent<Animator>();
+        MoveCharacter.GetComponent<Animator>();
         //JumpCharacter.GetComponent<Animator>();
         //OneShoot.GetComponent<AudioSource>();
     }
 
     private void Update()
     {
-        Vector3 mov = new Vector3(
+        // Creamos un nuevo vector con el desplazamiento del personaje
+        desplazamiento = new Vector2(
             Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical"),
-            0
+            Input.GetAxisRaw("Vertical")
         );
 
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + mov, speed * Time.deltaTime);
+        // Si el personaje se desplaza, indicamos los nuevos puntos del vector y arrancamos la animación.
+        if (desplazamiento != Vector2.zero)
+        {
+            MoveCharacter.SetFloat("MovX", desplazamiento.x);
+            MoveCharacter.SetFloat("MovY", desplazamiento.y);
+            MoveCharacter.SetBool("IsWalking", true);
+        }
+        // Si el personaje está quieto volvemos a poner la animación a false.
+        else
+        {
+            MoveCharacter.SetBool("IsWalking", false);
+        }
 
         //HandleAnimations();
     }
 
-    // Función que mueve el personaje hacia delante en base a una velocidad definida.
-    private void MoveForward()
+    private void FixedUpdate()
     {
-        Vector3 mov = new Vector3(
-            Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical"),
-            0
-        );
-
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + mov, speed * Time.deltaTime);
-
-        //rigidBody.position = new Vector2(Speed, rigidBody.position.x);
-
-        //MoveCharacter.SetTrigger("IsWalking");
-        //rigidBody.velocity = new Vector2(Speed, rigidBody.velocity.y);
+        // Movemos al personaje al nuevo punto
+        rigidBody.MovePosition(rigidBody.position + desplazamiento * speed * Time.deltaTime);
     }
 
-    // Función que mueve el personaje hacia arriba en base a una velocidad definida.
-    private void MoveUp()
-    {
-       // MoveCharacter.SetTrigger("IsWalking");
-        rigidBody.velocity = new Vector2(speed, rigidBody.velocity.x);
-    }
-
-    // Función que mueve el personaje hacia abajo en base a una velocidad definida.
-    private void MoveDown()
-    {
-        //MoveCharacter.SetTrigger("IsWalking");
-        rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.x);
-    }
-
-    // Función que mueve el personaje hacia atrás en base a una velocidad definida.
-    private void MoveBackward()
-    {
-        //MoveCharacter.SetTrigger("IsWalking");
-        rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.y);
-    }
-
-    // Función que resetea el trigger cuando el personaje se deja de mover.
-    private void StopMoving()
-    {
-        //MoveCharacter.ResetTrigger("IsWalking");
-    }
+    
 
     // Función que gestiona las animaciones.
     /*private void HandleAnimations()

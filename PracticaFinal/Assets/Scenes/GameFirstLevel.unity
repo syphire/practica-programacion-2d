@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 401646551}
   - component: {fileID: 401646552}
   - component: {fileID: 401646553}
+  - component: {fileID: 401646554}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -366,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 401646550}
+  MoveCharacter: {fileID: 401646554}
   delayTime: 0.3
 --- !u!50 &401646552
 Rigidbody2D:
@@ -469,6 +471,25 @@ PolygonCollider2D:
       - {x: -0.1923077, y: 0.06923077}
       - {x: -0.18461539, y: 0.03846154}
       - {x: -0.17692308, y: 0.046153847}
+--- !u!95 &401646554
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401646548}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a82c7c7cbff724ff18415692c88112d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &411123268
 GameObject:
   m_ObjectHideFlags: 0
