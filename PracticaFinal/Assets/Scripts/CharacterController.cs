@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour
     Vector2 desplazamiento;
 
     public AudioSource AudioCofre;
+    public AudioSource AudioTrap;
 
     /*public Transform FeetLeft;
     public Transform FeetRight;
@@ -42,6 +43,7 @@ public class CharacterController : MonoBehaviour
         MoveCharacter.GetComponent<Animator>();
 
         AudioCofre.GetComponent<AudioSource>();
+        AudioTrap.GetComponent<AudioSource>();
         //JumpCharacter.GetComponent<Animator>();
         //OneShoot.GetComponent<AudioSource>();
     }
@@ -107,6 +109,11 @@ public class CharacterController : MonoBehaviour
             AudioCofre.Play();
             // Al colisionar se destruye el cofre.
             Destroy(collider.gameObject);
+        }
+        else if (collider.gameObject.CompareTag("Pinchos"))
+        {
+            Debug.Log("pinchooooooossss");
+            AudioTrap.Play();
         }
     }
 }
