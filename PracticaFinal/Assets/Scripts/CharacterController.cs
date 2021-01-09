@@ -8,7 +8,11 @@ public class CharacterController : MonoBehaviour
 
     public Animator MoveCharacter;
 
+    public Action GetCofre;
+
     Vector2 desplazamiento;
+
+    public AudioSource AudioCofre;
 
     /*public Transform FeetLeft;
     public Transform FeetRight;
@@ -36,6 +40,8 @@ public class CharacterController : MonoBehaviour
     private void Start()
     {
         MoveCharacter.GetComponent<Animator>();
+
+        AudioCofre.GetComponent<AudioSource>();
         //JumpCharacter.GetComponent<Animator>();
         //OneShoot.GetComponent<AudioSource>();
     }
@@ -90,29 +96,17 @@ public class CharacterController : MonoBehaviour
 
 
     // Función que comprueba si el personaje ha colisionado contra algún elemento.
-    /*private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        // Si el objeto contra el que se colisiona tiene el tag "EndOfLevel" es que hemos llegado al final de la partida.
-        if (collider.gameObject.CompareTag("EndOfLevel"))
+        // Si el objeto contra el que se colisiona tiene el tag "Cofre" es que ha cogido un cofre.
+        if (collider.gameObject.CompareTag("Cofre"))
         {
-            OnReachedEndOfLevelFlagStick?.Invoke();
-        }
-        // En cambio si el objeto tiene el tag "Enemy" o "HoleCollider" es que ha chocado contra un enemigo o se ha caído por el agujero.
-        // Por lo tanto, el personaje muere.
-        else if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("HoleCollider")) 
-        {
-            OnKilled?.Invoke();
-        }
-        else if (collider.gameObject.CompareTag("BrickMushroom"))
-        {
-            Mushroom?.Invoke();
-        }
-        else if (collider.gameObject.CompareTag("RoseMushroom"))
-        {
-            // Eliminamos la seta.
+            Debug.Log("cojo un cofre!");
+
+            // Reproducimos el audio del cofre.
+            AudioCofre.Play();
+            // Al colisionar se destruye el cofre.
             Destroy(collider.gameObject);
-            // Llamamos a la función GetSuperMario.
-            GetSuperMario?.Invoke();
         }
-    }*/
+    }
 }

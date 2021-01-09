@@ -6,6 +6,7 @@ public class GameplayManager : MonoBehaviour
 {
     public CharacterController CharacterController;
     public GameObject Character;
+    public AudioSource Soundtrack;
     /*public Button StartButton;
     public Button ResetButton;
     public Text Victoria;
@@ -25,11 +26,14 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
 
+        Soundtrack.GetComponent<AudioSource>();
+
         //MarioController.OnKilled += EndGameEnemy;
-        //MarioController.OnReachedEndOfLevelFlagStick += EndGame;
         CharacterController.enabled = true;
         //MarioController.Mushroom = OnMushroom;
         //MarioController.GetSuperMario += GetSuperMario;
+
+        Soundtrack.Play();
 
     }
 
@@ -61,6 +65,8 @@ public class GameplayManager : MonoBehaviour
 
         CharacterController.enabled = false;
     }
+
+    
 
     // Función a la que se llama cuando golpeamos el ladrillo y que inicia la animación de la seta.
     private void OnMushroom()
