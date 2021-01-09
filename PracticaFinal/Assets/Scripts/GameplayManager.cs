@@ -7,6 +7,10 @@ public class GameplayManager : MonoBehaviour
     public CharacterController CharacterController;
     public GameObject Character;
     public AudioSource Soundtrack;
+    public AudioSource AudioGameOver;
+
+    public Text TextGameOver;
+    
     /*public Button StartButton;
     public Button ResetButton;
     public Text Victoria;
@@ -25,16 +29,18 @@ public class GameplayManager : MonoBehaviour
     // Se inicializan las variables y se obtienen los componentes musicales.
     private void Start()
     {
+        CharacterController.GoToSecondLevel = GoToSecondLevel;
+        CharacterController.EndGame = EndGame;
+
+        CharacterController.enabled = true;
 
         Soundtrack.GetComponent<AudioSource>();
+        AudioGameOver.GetComponent<AudioSource>();
+        TextGameOver.GetComponent<Text>();
 
-        //MarioController.OnKilled += EndGameEnemy;
-        CharacterController.enabled = true;
-        //MarioController.Mushroom = OnMushroom;
-        //MarioController.GetSuperMario += GetSuperMario;
+        TextGameOver.enabled = false;
 
         Soundtrack.Play();
-
     }
 
     // Función que inicia la partida tras pulsar en el botón de inicio.
@@ -42,6 +48,13 @@ public class GameplayManager : MonoBehaviour
     public void StartGame()
     {
         CharacterController.enabled = true;
+    }
+
+    // Función que reinicia la escena.
+    public void GoToSecondLevel()
+    {
+        Debug.Log("cargando second nivel");
+        SceneManager.LoadScene("GameSecondLevel");
     }
 
     // Función que reinicia la escena.
@@ -64,20 +77,11 @@ public class GameplayManager : MonoBehaviour
     {
 
         CharacterController.enabled = false;
+        TextGameOver.enabled = true;
+        Soundtrack.Stop();
+        AudioGameOver.Play();
     }
 
     
 
-    // Función a la que se llama cuando golpeamos el ladrillo y que inicia la animación de la seta.
-    private void OnMushroom()
-    {
-        //MoveMushroom.SetTrigger("MoveMushroom");
-    }
-
-    // Función a la que se llama cuando el personaje coge la seta que lo transforma en Super Mario.
-    private void GetSuperMario()
-    {
-        // Para ello se inicia una corrutina donde se cambia el color del personaje y se le da sus poderes.
-        //StartCoroutine(Character.GetComponent<ChangeColor>().GetSuperMarioColor(SpriteCharacter));
-    }
 }

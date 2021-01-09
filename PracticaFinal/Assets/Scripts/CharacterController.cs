@@ -1,19 +1,25 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterController : MonoBehaviour
 {
     private float speed = 4f;
     public Transform Character;
+    public GameObject Puerta;
+    public Text Corazones;
 
     public Animator MoveCharacter;
 
     public Action GetCofre;
 
-    Vector2 desplazamiento;
-
     public AudioSource AudioCofre;
     public AudioSource AudioTrap;
+    public Action GoToSecondLevel;
+    public Action EndGame;
+
+    private float numeroCofres = 0f;
+    private Vector2 desplazamiento;
 
     /*public Transform FeetLeft;
     public Transform FeetRight;
@@ -44,6 +50,9 @@ public class CharacterController : MonoBehaviour
 
         AudioCofre.GetComponent<AudioSource>();
         AudioTrap.GetComponent<AudioSource>();
+        Corazones.GetComponent<Text>();
+
+        Puerta.GetComponent<GameObject>();
         //JumpCharacter.GetComponent<Animator>();
         //OneShoot.GetComponent<AudioSource>();
     }
@@ -109,11 +118,46 @@ public class CharacterController : MonoBehaviour
             AudioCofre.Play();
             // Al colisionar se destruye el cofre.
             Destroy(collider.gameObject);
+
+            numeroCofres++;
+
+            if (numeroCofres == 6)
+            {
+                Debug.Log("he cogido todos los cofres");
+                Destroy(Puerta);
+            }
         }
         else if (collider.gameObject.CompareTag("Pinchos"))
         {
             Debug.Log("pinchooooooossss");
-            AudioTrap.Play();
+            
+            
+            if (Corazones.text == "1")
+            {
+                // Si perdemos los 3 corazones de vida, el personaje muere y reiniciamos el nivel.
+                Corazones.text = "0";
+                Debug.Log("GAME OVER");
+                AudioTrap.Play();
+                EndGame?.Invoke();
+            }
+            else if (Corazones.text == "2")
+            {
+                // Cuando colisionamos contra pinchos, reproducimos el audio correspondiente y perdemos vida.
+                Corazones.text = "1";
+                AudioTrap.Play();
+            }
+            else if (Corazones.text == "3")
+            {
+                // Cuando colisionamos contra pinchos, reproducimos el audio correspondiente y perdemos vida.
+                Corazones.text = "2";
+                AudioTrap.Play();
+            }
+        }
+        else if (collider.gameObject.CompareTag("Puerta"))
+        {
+            // Cuando colisionamos con el hueco de la puerta, pasamos al siguiente nivel.
+            Debug.Log("Vámonos al segundo nivel!");
+            GoToSecondLevel?.Invoke();
         }
     }
 }
