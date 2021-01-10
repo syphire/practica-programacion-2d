@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameplayManager : MonoBehaviour
     public Text TextFinish;
 
     public Animator AbrirGranCofre;
+
+    private float delay = 8f;
 
     /*public Button StartButton;
     public Button ResetButton;
@@ -52,13 +55,6 @@ public class GameplayManager : MonoBehaviour
         Soundtrack.Play();
     }
 
-    // Función que inicia la partida tras pulsar en el botón de inicio.
-    // Se activa el movimiento del personaje, empieza a sonar la música y se oculta el botón.
-    public void StartGame()
-    {
-        CharacterController.enabled = true;
-    }
-
     // Función que reinicia la escena.
     public void GoToSecondLevel()
     {
@@ -92,8 +88,16 @@ public class GameplayManager : MonoBehaviour
         AbrirGranCofre.SetTrigger("OpenGranCofre");
         Soundtrack.Stop();
         AudioFinish.Play();
+
+        StartCoroutine(LoadCreditosAfterDelay(delay));
     }
 
+    // Corrutina que carga la pantalla de créditos del juego.
+    IEnumerator LoadCreditosAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("Creditos");
+    }
 
 
 }
