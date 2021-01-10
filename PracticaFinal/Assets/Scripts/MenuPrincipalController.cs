@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using System;
 
 public class MenuPrincipalController : MonoBehaviour
 {
@@ -16,16 +17,12 @@ public class MenuPrincipalController : MonoBehaviour
         Salir.GetComponent<Button>();*/
     }
 
-    // Update is called once per frame
-    void Update()
-    { 
-        
-    }
-
     public void ButtonClick()
     {
+        // Obtenemos el nombre del botón clicado.
         buttonClicked = EventSystem.current.currentSelectedGameObject.name;
 
+        // Comprobamos qué botón pulsamos para realizar una u otra acción.
         if (buttonClicked == "EmpezarPartidaButton")
         {
             StartGame();
@@ -40,30 +37,42 @@ public class MenuPrincipalController : MonoBehaviour
         }
         else if (buttonClicked == "AtrasButton")
         {
-            Debug.Log("boton atras");
             GoBack();
+        }
+        else if (buttonClicked == "ButtonReiniciar")
+        {
+            RestartLevel();
         }
     }
 
+    // Función que inicia la escena de juego.
     public void StartGame()
     {
         SceneManager.LoadScene("GameFirstLevel");
     }
 
+    // Función que inicia la escena de la información de los controles.
     public void ReadControles()
     {
         SceneManager.LoadScene("InfoControles");
     }
 
+    // Función que finaliza la partida.
     public void Exit()
     {
         Application.Quit();
     }
 
+    // Función que vuelve a la escena del menú principal.
     public void GoBack()
     {
-        Debug.Log("dentro del boton atras");
         SceneManager.LoadScene("MenuPrincipal");
+    }
+
+    // Función que reinicia la escena.
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }

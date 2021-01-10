@@ -6,6 +6,7 @@ using System.Collections;
 public class GameplayManager : MonoBehaviour
 {
     public CharacterController CharacterController;
+    public MenuPrincipalController MenuPrincipalController;
     public GameObject Character;
     public AudioSource Soundtrack;
     public AudioSource AudioGameOver;
@@ -13,24 +14,11 @@ public class GameplayManager : MonoBehaviour
 
     public Text TextGameOver;
     public Text TextFinish;
+    public GameObject ButtonResetLevel;
 
     public Animator AbrirGranCofre;
 
     private float delay = 8f;
-
-    /*public Button StartButton;
-    public Button ResetButton;
-    public Text Victoria;
-    public Text GameOver;
-    public AudioSource Music;
-    public AudioSource YouLose;
-    public AudioSource Winner;
-    public Animator MoveMushroom;
-    public ParticleSystem Lluvia;
-
-    public SpriteRenderer SpriteCharacter;
-
-    public Transform Enemy;*/
 
     // Función Start.
     // Se inicializan las variables y se obtienen los componentes musicales.
@@ -47,10 +35,12 @@ public class GameplayManager : MonoBehaviour
         AudioFinish.GetComponent<AudioSource>();
         TextGameOver.GetComponent<Text>();
         TextFinish.GetComponent<Text>();
+        ButtonResetLevel.GetComponent<GameObject>();
         AbrirGranCofre.GetComponent<Animator>();
 
         TextGameOver.enabled = false;
         TextFinish.enabled = false;
+        ButtonResetLevel.SetActive(false);
 
         Soundtrack.Play();
     }
@@ -63,18 +53,19 @@ public class GameplayManager : MonoBehaviour
     }
 
     // Función que reinicia la escena.
-    public void RestartLevel()
+    /*public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    }*/
 
-    // Función a la que se llama cuando el juego se termina tras haber perdido odos los corazones.
+    // Función a la que se llama cuando el juego se termina tras haber perdido todos los corazones.
     // Se desactiva la música, el movimiento del personaje y se muestra el mensaje de fin.
     private void EndGame()
     {
 
         CharacterController.enabled = false;
         TextGameOver.enabled = true;
+        ButtonResetLevel.SetActive(true);
         Soundtrack.Stop();
         AudioGameOver.Play();
     }

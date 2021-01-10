@@ -11,34 +11,19 @@ public class CharacterController : MonoBehaviour
 
     public Animator MoveCharacter;
 
-    public Action GetCofre;
-
     public AudioSource AudioCofre;
     public AudioSource AudioTrap;
+
+    public Action GetCofre;
     public Action GoToSecondLevel;
     public Action EndGame;
     public Action FinishGame;
 
     private float numeroCofres = 0f;
-    private Vector2 desplazamiento;
-
-    /*public Transform FeetLeft;
-    public Transform FeetRight;
-    public LayerMask GroundLayer;
-
-    
-    public Animator JumpCharacter;
-
-    public Action OnKilled;
-    public Action OnReachedEndOfLevelFlagStick;
-    public Action Mushroom;
-    public Action GetSuperMario;*/
-
-    private Rigidbody2D rigidBody;
-
-    //public AudioSource OneShoot;
-
     public float delayTime = 0.3f;
+
+    private Vector2 desplazamiento;
+    private Rigidbody2D rigidBody;
 
     private void Awake()
     {
@@ -54,8 +39,6 @@ public class CharacterController : MonoBehaviour
         Corazones.GetComponent<Text>();
 
         Puerta.GetComponent<GameObject>();
-        //JumpCharacter.GetComponent<Animator>();
-        //OneShoot.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -78,8 +61,6 @@ public class CharacterController : MonoBehaviour
         {
             MoveCharacter.SetBool("IsWalking", false);
         }
-
-        //HandleAnimations();
     }
 
     private void FixedUpdate()
@@ -88,33 +69,12 @@ public class CharacterController : MonoBehaviour
         rigidBody.MovePosition(rigidBody.position + desplazamiento * speed * Time.deltaTime);
     }
 
-    
-
-    // Función que gestiona las animaciones.
-    /*private void HandleAnimations()
-    {
-        if (!IsGrounded())
-        {
-            JumpCharacter.SetBool("IsJumping", true);
-            JumpCharacter.SetFloat("VelocityY", 1 * Mathf.Sign(rigidBody.velocity.y));
-        }
-
-        if (IsGrounded())
-        {
-            JumpCharacter.SetBool("IsJumping", false);
-            JumpCharacter.SetFloat("VelocityY", 0);
-        }
-    }*/
-
-
     // Función que comprueba si el personaje ha colisionado contra algún elemento.
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // Si el objeto contra el que se colisiona tiene el tag "Cofre" es que ha cogido un cofre.
         if (collider.gameObject.CompareTag("Cofre"))
         {
-            Debug.Log("cojo un cofre!");
-
             // Reproducimos el audio del cofre.
             AudioCofre.Play();
             // Al colisionar se destruye el cofre.
@@ -124,20 +84,15 @@ public class CharacterController : MonoBehaviour
 
             if (numeroCofres == 6)
             {
-                Debug.Log("he cogido todos los cofres");
                 Destroy(Puerta);
             }
         }
         else if (collider.gameObject.CompareTag("Pinchos"))
-        {
-            Debug.Log("pinchooooooossss");
-            
-            
+        {   
             if (Corazones.text == "1")
             {
                 // Si perdemos los 3 corazones de vida, el personaje muere y reiniciamos el nivel.
                 Corazones.text = "0";
-                Debug.Log("GAME OVER");
                 AudioTrap.Play();
                 EndGame?.Invoke();
             }
@@ -157,13 +112,11 @@ public class CharacterController : MonoBehaviour
         else if (collider.gameObject.CompareTag("Puerta"))
         {
             // Cuando colisionamos con el hueco de la puerta, pasamos al siguiente nivel.
-            Debug.Log("Vámonos al segundo nivel!");
             GoToSecondLevel?.Invoke();
         }
         else if (collider.gameObject.CompareTag("GranCofre"))
         {
             // Cuando abrimos el gran cofre, terminamos la partida.
-            Debug.Log("Partida terminada!");
             FinishGame?.Invoke();
         }
     }
