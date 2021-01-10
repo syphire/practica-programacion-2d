@@ -8,9 +8,13 @@ public class GameplayManager : MonoBehaviour
     public GameObject Character;
     public AudioSource Soundtrack;
     public AudioSource AudioGameOver;
+    public AudioSource AudioFinish;
 
     public Text TextGameOver;
-    
+    public Text TextFinish;
+
+    public Animator AbrirGranCofre;
+
     /*public Button StartButton;
     public Button ResetButton;
     public Text Victoria;
@@ -31,14 +35,19 @@ public class GameplayManager : MonoBehaviour
     {
         CharacterController.GoToSecondLevel = GoToSecondLevel;
         CharacterController.EndGame = EndGame;
+        CharacterController.FinishGame = FinishGame;
 
         CharacterController.enabled = true;
 
         Soundtrack.GetComponent<AudioSource>();
         AudioGameOver.GetComponent<AudioSource>();
+        AudioFinish.GetComponent<AudioSource>();
         TextGameOver.GetComponent<Text>();
+        TextFinish.GetComponent<Text>();
+        AbrirGranCofre.GetComponent<Animator>();
 
         TextGameOver.enabled = false;
+        TextFinish.enabled = false;
 
         Soundtrack.Play();
     }
@@ -63,15 +72,7 @@ public class GameplayManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // Función a la que se llama cuando el juego se termina tras haber chocado con un enemigo.
-    // Se desactiva la música, el movimiento del personaje, y se muestra el mensaje de fin.
-    private void EndGameEnemy()
-    {
-
-        CharacterController.enabled = false;
-    }
-
-    // Función a la que se llama cuando se termina el juego tras haber alcanzado la meta.
+    // Función a la que se llama cuando el juego se termina tras haber perdido odos los corazones.
     // Se desactiva la música, el movimiento del personaje y se muestra el mensaje de fin.
     private void EndGame()
     {
@@ -82,6 +83,17 @@ public class GameplayManager : MonoBehaviour
         AudioGameOver.Play();
     }
 
-    
+    // Función a la que se llama cuando se termina el juego tras haber alcanzado la meta.
+    // Se desactiva la música, el movimiento del personaje y se muestra el mensaje de fin.
+    private void FinishGame()
+    {
+        CharacterController.enabled = false;
+        TextFinish.enabled = true;
+        AbrirGranCofre.SetTrigger("OpenGranCofre");
+        Soundtrack.Stop();
+        AudioFinish.Play();
+    }
+
+
 
 }

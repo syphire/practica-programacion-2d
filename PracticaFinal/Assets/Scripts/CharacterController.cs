@@ -17,6 +17,7 @@ public class CharacterController : MonoBehaviour
     public AudioSource AudioTrap;
     public Action GoToSecondLevel;
     public Action EndGame;
+    public Action FinishGame;
 
     private float numeroCofres = 0f;
     private Vector2 desplazamiento;
@@ -158,6 +159,12 @@ public class CharacterController : MonoBehaviour
             // Cuando colisionamos con el hueco de la puerta, pasamos al siguiente nivel.
             Debug.Log("Vámonos al segundo nivel!");
             GoToSecondLevel?.Invoke();
+        }
+        else if (collider.gameObject.CompareTag("GranCofre"))
+        {
+            // Cuando abrimos el gran cofre, terminamos la partida.
+            Debug.Log("Partida terminada!");
+            FinishGame?.Invoke();
         }
     }
 }
