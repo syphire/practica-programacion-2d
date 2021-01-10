@@ -12,6 +12,7 @@ public class CreditosController : MonoBehaviour
         StartCoroutine(LoadMenuAfterDelay(delay));
     }
 
+    // Corrutina que carga la pantalla de título del juego tras un pequeño delay.
     IEnumerator LoadMenuAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);

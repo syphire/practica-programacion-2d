@@ -43,7 +43,7 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
-        // Creamos un nuevo vector con el desplazamiento del personaje
+        // Creamos un nuevo vector con el desplazamiento del personaje.
         desplazamiento = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical")
@@ -54,6 +54,7 @@ public class CharacterController : MonoBehaviour
         {
             MoveCharacter.SetFloat("MovX", desplazamiento.x);
             MoveCharacter.SetFloat("MovY", desplazamiento.y);
+
             MoveCharacter.SetBool("IsWalking", true);
         }
         // Si el personaje está quieto volvemos a poner la animación a false.
@@ -65,7 +66,7 @@ public class CharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Movemos al personaje al nuevo punto
+        // Movemos el personaje al nuevo punto
         rigidBody.MovePosition(rigidBody.position + desplazamiento * speed * Time.deltaTime);
     }
 
@@ -79,44 +80,54 @@ public class CharacterController : MonoBehaviour
             AudioCofre.Play();
             // Al colisionar se destruye el cofre.
             Destroy(collider.gameObject);
-
+            // Aumentamos el número de cofres cogidos
             numeroCofres++;
 
+            // Si cogemos 6 cofres, que es el número máximo de cofres que hay en la escena, destruimos la puerta para poder pasar
+            // a la siguiente escena.
             if (numeroCofres == 6)
             {
                 Destroy(Puerta);
             }
         }
+        // Si el objeto contra el que colisionamos son los "Pinchos", entonces perdemos vida.
         else if (collider.gameObject.CompareTag("Pinchos"))
         {   
             if (Corazones.text == "1")
             {
                 // Si perdemos los 3 corazones de vida, el personaje muere y reiniciamos el nivel.
                 Corazones.text = "0";
+                // Reproducimos el audio de "daño" al chocar contra los pinchos.
                 AudioTrap.Play();
+                // Ponemos el booleano de la animación de caminar a falso.
+                MoveCharacter.SetBool("IsWalking", false);
+                // Llamamos a la función que finaliza la partida.
                 EndGame?.Invoke();
             }
             else if (Corazones.text == "2")
             {
-                // Cuando colisionamos contra pinchos, reproducimos el audio correspondiente y perdemos vida.
+                // Cuando colisionamos contra pinchos, reproducimos el audio correspondiente y perdemos una unidad de vida.
                 Corazones.text = "1";
                 AudioTrap.Play();
             }
             else if (Corazones.text == "3")
             {
-                // Cuando colisionamos contra pinchos, reproducimos el audio correspondiente y perdemos vida.
+                // Cuando colisionamos contra pinchos, reproducimos el audio correspondiente y perdemos una unidad de vida.
                 Corazones.text = "2";
                 AudioTrap.Play();
             }
         }
+        // Cuando colisionamos con el hueco de la puerta, pasamos al siguiente nivel.
         else if (collider.gameObject.CompareTag("Puerta"))
         {
-            // Cuando colisionamos con el hueco de la puerta, pasamos al siguiente nivel.
             GoToSecondLevel?.Invoke();
         }
+        // Cuando abrimos el gran cofre, la partida se termina.
         else if (collider.gameObject.CompareTag("GranCofre"))
         {
-            // Cuando abrimos el gran cofre, terminamos la partida.
+            // Ponemos el booleano de la animación de caminar a falso.
+            MoveCharacter.SetBool("IsWalking", false);
+            // Llamamos a la función que se encarga de finalizar la partida.
             FinishGame?.Invoke();
         }
     }

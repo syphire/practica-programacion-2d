@@ -45,24 +45,16 @@ public class GameplayManager : MonoBehaviour
         Soundtrack.Play();
     }
 
-    // Función que reinicia la escena.
+    // Función que carga la escena con el segundo nivel.
     public void GoToSecondLevel()
     {
-        Debug.Log("cargando second nivel");
         SceneManager.LoadScene("GameSecondLevel");
     }
-
-    // Función que reinicia la escena.
-    /*public void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }*/
 
     // Función a la que se llama cuando el juego se termina tras haber perdido todos los corazones.
     // Se desactiva la música, el movimiento del personaje y se muestra el mensaje de fin.
     private void EndGame()
     {
-
         CharacterController.enabled = false;
         TextGameOver.enabled = true;
         ButtonResetLevel.SetActive(true);
@@ -70,8 +62,8 @@ public class GameplayManager : MonoBehaviour
         AudioGameOver.Play();
     }
 
-    // Función a la que se llama cuando se termina el juego tras haber alcanzado la meta.
-    // Se desactiva la música, el movimiento del personaje y se muestra el mensaje de fin.
+    // Función a la que se llama cuando se termina el juego tras haber alcanzado el gran cofre.
+    // Se desactiva la música, el movimiento del personaje, arrancamos la animación del gran cofre y se muestra el mensaje de fin.
     private void FinishGame()
     {
         CharacterController.enabled = false;
@@ -80,15 +72,15 @@ public class GameplayManager : MonoBehaviour
         Soundtrack.Stop();
         AudioFinish.Play();
 
+        // Se inicia una corrutina
         StartCoroutine(LoadCreditosAfterDelay(delay));
     }
 
-    // Corrutina que carga la pantalla de créditos del juego.
+    // Corrutina que carga la pantalla de créditos del juego tras un pequeño delay.
     IEnumerator LoadCreditosAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene("Creditos");
     }
-
 
 }

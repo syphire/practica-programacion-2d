@@ -12,6 +12,7 @@ public class TitlePageController : MonoBehaviour
         StartCoroutine(LoadLevelAfterDelay(delay));
     }
 
+    // Corrutina que carga la pantalla del menú principal tras un pequeño delay.
     IEnumerator LoadLevelAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);

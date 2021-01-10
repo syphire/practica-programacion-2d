@@ -12,6 +12,7 @@ public class LogoController : MonoBehaviour
         StartCoroutine(LoadLevelAfterDelay(delay));
     }
 
+    // Corrutina que carga la pantalla de título del juego tras un pequeño delay.
     IEnumerator LoadLevelAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);

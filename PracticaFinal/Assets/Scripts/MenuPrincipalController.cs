@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-using System;
 
 public class MenuPrincipalController : MonoBehaviour
 {
@@ -12,11 +9,10 @@ public class MenuPrincipalController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        /*NuevaPartida.GetComponent<Button>();
-        Controles.GetComponent<Button>();
-        Salir.GetComponent<Button>();*/
+
     }
 
+    // Función que gestiona los clics de los botones de la página del menú. 
     public void ButtonClick()
     {
         // Obtenemos el nombre del botón clicado.
@@ -51,7 +47,7 @@ public class MenuPrincipalController : MonoBehaviour
         SceneManager.LoadScene("GameFirstLevel");
     }
 
-    // Función que inicia la escena de la información de los controles.
+    // Función que inicia la escena de información de los controles.
     public void ReadControles()
     {
         SceneManager.LoadScene("InfoControles");
