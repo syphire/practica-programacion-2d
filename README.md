@@ -1,3 +1,5 @@
+![Imagen principal La Leyenda de Krymsa](/LaLeyendaDeKrymsa-01.png)
+
 # Cómo jugar
 El objetivo del juego es alcanzar el gran cofre. Para ello, el jugador tendrá que esquivar los pinchos que hay en el suelo y coger los pequeños cofres para acceder a la sala del tesoro en la que se encuentra el gran cofre.
 
@@ -39,3 +41,4 @@ Para darle mayor realismo al juego, el personaje cuenta con cuatro animaciones p
 
 Por último, se ha implementado un flujo de juego natural y usable para cualquier jugador. Una vez iniciada la partida con la pantalla de logo, se pasa automáticamente a la pantalla del título del juego y de ahí al menú principal. Una vez se inicia la partida, el jugador irá cogiendo los pequeños cofres hasta que se abra la puerta, la cruzará y llegará a la escena final donde tendrá que coger el cofre grande para finalizar la partida. Se mostrará un mensaje de fin y acto seguido se mostrarán los créditos del juego donde, tras unos segundos, redirigirá de nuevo a la pantalla del menú.
 
+![Imagen principal La Leyenda de Krymsa](/LaLeyendaDeKrymsa-02.png)
